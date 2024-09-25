@@ -22,41 +22,40 @@ Implemented features are listed here : [features](./etcs/feature.md)
 
 ## Install
 
+2024/09/25 Ubuntu 22.04 LTSで動作確認
+
 ### Dependencies
 
 You need dependencies below.
 
-- python3
-- tensorflow 1.4.1+
-- opencv3, protobuf, python3-tk
+- python 3.7.17
+- tensorflow 1.15
+- opencv-python 4.5.4.58
+- protobuf 3.20.3
 - slidingwindow
   - https://github.com/adamrehn/slidingwindow
   - I copied from the above git repo to modify few things.
 
 ### Install
 
+ビルドツールインストール
+
+```
+sudo apt-get install swig
+```
+
 Clone the repo and install 3rd-party libraries.
 
 ```bash
-$ git clone https://www.github.com/ildoonet/tf-pose-estimation
+$ git clone https://github.com/kznagamori/ildoonet-tf-pose-estimation
 $ cd tf-pose-estimation
-$ pip3 install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 Build c++ library for post processing. See : https://github.com/ildoonet/tf-pose-estimation/tree/master/tf_pose/pafprocess
 ```
 $ cd tf_pose/pafprocess
 $ swig -python -c++ pafprocess.i && python3 setup.py build_ext --inplace
-```
-
-### Package Install
-
-Alternatively, you can install this repo as a shared package using pip.
-
-```bash
-$ git clone https://www.github.com/ildoonet/tf-pose-estimation
-$ cd tf-openpose
-$ python setup.py install  # Or, `pip install -e .`
 ```
 
 ## Models & Performances
@@ -86,10 +85,15 @@ $ bash download.sh
 You can test the inference feature with a single image.
 
 ```
-$ python run.py --model=mobilenet_thin --resize=432x368 --image=./images/p1.jpg
+export CUDA_VISIBLE_DEVICES="" && python run.py --model=mobilenet_thin --resize=432x368 --image=./images/p1.jpg$ python run.py --model=mobilenet_thin --resize=432x368 --image=./images/p1.jpg
 ```
 
-The image flag MUST be relative to the src folder with no "~", i.e:
+最近のCUDAだとtensorflow 1.15のGPUが動作しないので、GPU無効で動作させる。
+
+
+
+]The image flag MUST be relative to the src folder with no "~", i.e:
+
 ```
 --image ../../Desktop
 ```

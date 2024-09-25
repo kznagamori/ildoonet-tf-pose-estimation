@@ -1,5 +1,5 @@
 argparse
-dill
+dill==0.2.7.1
 fire
 matplotlib
 numba
@@ -10,4 +10,7 @@ scikit-image
 scipy
 slidingwindow
 tqdm
+protobuf==3.20.3
+tensorflow==1.15
+opencv-python==4.5.4.58
 git+https://github.com/ppwwyyxx/tensorpack.git
